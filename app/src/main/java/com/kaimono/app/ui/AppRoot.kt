@@ -1,5 +1,6 @@
 package com.kaimono.app.ui
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -27,7 +29,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -36,12 +37,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -97,12 +98,9 @@ private fun MainScaffold(vm: AppViewModel, user: String) {
             drawerContent = {
                 ModalDrawerSheet {
                     Spacer(Modifier.height(16.dp))
-                    androidx.compose.foundation.layout.Row(
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
-                    ) {
-                        Icon(Icons.Filled.MenuBook, null,
-                            tint = MaterialTheme.colorScheme.primary)
+                    Row(modifier = Modifier.padding(horizontal = 20.dp),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Filled.MenuBook, null, tint = MaterialTheme.colorScheme.primary)
                         Spacer(Modifier.padding(4.dp))
                         Text("Kaimono", style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold)
@@ -145,11 +143,8 @@ private fun MainScaffold(vm: AppViewModel, user: String) {
                 },
                 snackbarHost = { SnackbarHost(snack) },
             ) { padding ->
-                NavHost(
-                    navController = nav,
-                    startDestination = "dashboard",
-                    modifier = Modifier.padding(padding),
-                ) {
+                NavHost(navController = nav, startDestination = "dashboard",
+                    modifier = Modifier.padding(padding)) {
                     composable("dashboard") { DashboardScreen(vm, nav) }
                     composable("library") { LibraryScreen(vm, nav) }
                     composable("browse") { BrowseScreen(vm, nav) }
